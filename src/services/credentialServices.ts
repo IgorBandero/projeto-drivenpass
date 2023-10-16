@@ -52,8 +52,21 @@ async function getCredentialById (userId:number, idCredential:number): Promise<C
     return credential;
 }
 
+async function deleteCredentialById (userId:number, idCredential:number): Promise<void> {
+    let credential = await credentialRepository.getCredentialById(idCredential);
+    if(!credential){
+        throw notFoundError();
+    }
+    if (credential.userId !== userId){
+        throw forbiddenError();
+    }
+    await credentialRepository.deleteCredentialById(idCredential);
+    return null;
+}
+
 export const credentialService = {
     createCredential,
     getCredentials,
-    getCredentialById
+    getCredentialById,
+    deleteCredentialById
 };

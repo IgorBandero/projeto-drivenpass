@@ -1,6 +1,7 @@
 import prisma from "@/config/database";
 import { Credential } from "@prisma/client";
 import { NewCredentialData } from "@/protocols";
+import httpStatus from "http-status";
 
 async function createCredential(newCredential: NewCredentialData): Promise<Credential> {
     const credentialNew = await prisma.credential.create({
@@ -37,9 +38,18 @@ async function getCredentialById(idCredential:number): Promise<Credential>{
     return credential;
 }
 
+async function deleteCredentialById(idCredential:number): Promise<void>{
+    await prisma.credential.deleteMany({
+        where: {
+            id: idCredential
+        }
+    });
+}
+
 export const credentialRepository = {
     createCredential,
     checkRepeatedTitle,
     getCredentials,
-    getCredentialById
+    getCredentialById,
+    deleteCredentialById
 };
