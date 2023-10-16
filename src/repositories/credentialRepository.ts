@@ -9,7 +9,7 @@ async function createCredential(newCredential: NewCredentialData): Promise<Crede
     return credentialNew;
 }
 
-async function checkRepeatedTitle(userId:number, title:string){
+async function checkRepeatedTitle(userId:number, title:string): Promise<Credential>{
     const repeatedTitle = await prisma.credential.findFirst({
         where: {
             title,
@@ -19,7 +19,27 @@ async function checkRepeatedTitle(userId:number, title:string){
     return repeatedTitle;
 }
 
+async function getCredentials(userId:number): Promise<Credential[]>{
+    const credentials = await prisma.credential.findMany({
+        where: {
+            userId
+        }
+    })
+    return credentials;
+}
+
+async function getCredentialById(idCredential:number): Promise<Credential>{
+    const credential = await prisma.credential.findUnique({
+        where: {
+            id: idCredential
+        }
+    })
+    return credential;
+}
+
 export const credentialRepository = {
     createCredential,
-    checkRepeatedTitle
+    checkRepeatedTitle,
+    getCredentials,
+    getCredentialById
 };
