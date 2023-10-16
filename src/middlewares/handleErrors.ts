@@ -17,6 +17,12 @@ req: Request, res: Response, next: NextFunction) {
     })
   }
 
+  if (error.name === "InvalidLoginError"){
+    return res.status(httpStatus.FORBIDDEN).send({
+      message: error.message
+    })
+  }
+
   if (error.name === "UnauthorizedError") {
     return res.status(httpStatus.UNAUTHORIZED).send({
       message: error.message,
