@@ -11,6 +11,12 @@ req: Request, res: Response, next: NextFunction) {
     });
   }
 
+  if (error.name === "TitleAlreadyInUseError") {
+    return res.status(httpStatus.CONFLICT).send({
+      message: error.message
+    });
+  }
+
   if (error.name === "InvalidDataError"){
     return res.status(httpStatus.UNAUTHORIZED).send({
       message: error.message

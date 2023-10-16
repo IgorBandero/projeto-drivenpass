@@ -1,6 +1,6 @@
 import { User } from "@prisma/client";
 import bcrypt from "bcrypt";
-import jwt from 'jsonwebtoken';
+import jwt from "jsonwebtoken";
 import { UserToken, NewUserData, UserLoginData, LoginData } from "@/protocols";
 import { emailAlreadyInUseError, invalidLoginError } from "@/errors";
 import { userRepository } from '@/repositories';
